@@ -3,7 +3,8 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import get_user_model
-from .serializers import UserSerializer, UserRegistrationSerializer
+
+from apps.users.serializers import UserSerializer, UserRegistrationSerializer
 
 User = get_user_model()
 

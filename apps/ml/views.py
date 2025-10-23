@@ -1,9 +1,12 @@
 from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticated
 from django.db.models import Q
-from .models import Prediction
-from .services import PredictionService
-from .serializers import PredictionSerializer
+from rest_framework.decorators import action
+from rest_framework.response import Response
+
+from apps.ml.models import Prediction
+from apps.ml.service import PredictionService
+from apps.ml.serializers import PredictionSerializer
 
 
 class PredictionViewSet(viewsets.ReadOnlyModelViewSet):

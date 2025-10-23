@@ -1,2 +1,3 @@
 django_men/
 PROJECT_STRUCT
+.env

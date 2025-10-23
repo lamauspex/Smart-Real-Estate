@@ -1,8 +1,14 @@
 from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticated
 from django_filters import rest_framework as filters
-from .models import Property, PropertyType
-from .serializers import PropertySerializer, PropertyTypeSerializer
+from rest_framework.decorators import action
+from rest_framework.response import Response
+
+from apps.properties.models import Property, PropertyType
+from apps.properties.serializers import (
+    PropertySerializer,
+    PropertyTypeSerializer
+)
 
 
 class PropertyTypeFilter(filters.FilterSet):

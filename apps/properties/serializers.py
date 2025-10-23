@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import Property, PropertyType
+
+from apps.ml.models import Property, PropertyType
 
 
 class PropertyTypeSerializer(serializers.ModelSerializer):
