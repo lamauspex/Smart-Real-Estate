@@ -1,16 +1,36 @@
 
 from django.db import models
 from django.contrib.auth import get_user_model
-from django.contrib.gis.db import models as gis_models
 
 User = get_user_model()
+
+
+class PropertyImage(models.Model):
+    """
+    Модель для хранения изображений недвижимости
+    """
+    property = models.ForeignKey(
+        'Property',
+        on_delete=models.CASCADE,
+        related_name='images'
+    )
+    image = models.ImageField(upload_to='property_images/')
+    is_main = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Image for {self.property.title}"
 
 
 class PropertyType(models.Model):
     """
     Тип недвижимости (квартира, дом, земельный участок и т.д.)
     """
-    name = models.CharField(max_length=100, unique=True, verbose_name="Тип")
+    name = models.CharField(
+        max_length=100,
+        unique=True,
+        verbose_name="Тип"
+    )
 
     def __str__(self):
         return self.name
@@ -27,8 +47,14 @@ class Property(models.Model):
         ('pending', 'В ожидании')
     ]
 
-    title = models.CharField(max_length=255, verbose_name="Название")
-    description = models.TextField(blank=True, verbose_name="Описание")
+    title = models.CharField(
+        max_length=255,
+        verbose_name="Название"
+    )
+    description = models.TextField(
+        blank=True,
+        verbose_name="Описание"
+    )
 
     # Связи
     owner = models.ForeignKey(
@@ -45,11 +71,24 @@ class Property(models.Model):
     )
 
     # Геоданные (PostGIS)
-    location = gis_models.PointField(
-        srid=4326,
-        verbose_name="Геолокация"
+    latitude = models.DecimalField(
+        max_digits=9,
+        decimal_places=6,
+        null=True,
+        blank=True,
+        verbose_name="Широта"
     )
-    address = models.CharField(max_length=255, verbose_name="Адрес")
+    longitude = models.DecimalField(
+        max_digits=9,
+        decimal_places=6,
+        null=True,
+        blank=True,
+        verbose_name="Долгота"
+    )
+    address = models.CharField(
+        max_length=255,
+        verbose_name="Адрес"
+    )
 
     # Основные характеристики
     area = models.DecimalField(
@@ -94,9 +133,13 @@ class Property(models.Model):
         verbose_name="Статус"
     )
     created_at = models.DateTimeField(
-        auto_now_add=True, verbose_name="Дата создания")
+        auto_now_add=True,
+        verbose_name="Дата создания"
+    )
     updated_at = models.DateTimeField(
-        auto_now=True, verbose_name="Дата обновления")
+        auto_now=True,
+        verbose_name="Дата обновления"
+    )
 
     class Meta:
         ordering = ['-created_at']

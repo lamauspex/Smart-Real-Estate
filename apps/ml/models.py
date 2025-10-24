@@ -1,5 +1,6 @@
 from django.db import models
-from properties.models import Property
+
+from apps.properties.models import Property
 
 
 class Prediction(models.Model):

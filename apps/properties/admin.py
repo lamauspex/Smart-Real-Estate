@@ -1,6 +1,6 @@
 from django.contrib import admin
-from django.contrib.gis.admin import OSMGeoAdmin
-from .models import Property, PropertyType
+
+from apps.properties.models import Property, PropertyType, PropertyImage
 
 
 @admin.register(PropertyType)
@@ -10,12 +10,35 @@ class PropertyTypeAdmin(admin.ModelAdmin):
 
 
 @admin.register(Property)
-class PropertyAdmin(OSMGeoAdmin):
+class PropertyAdmin(admin.ModelAdmin):
     list_display = ('title', 'property_type', 'price',
                     'area', 'status', 'created_at')
     list_filter = ('property_type', 'status', 'created_at')
     search_fields = ('title', 'address')
     date_hierarchy = 'created_at'
-    fields = ('title', 'description', 'owner', 'property_type', 'location',
-              'address', 'area', 'rooms', 'floor', 'total_floors',
-              'year_built', 'price', 'price_per_m2', 'status')
+    fieldsets = (
+        ('Основная информация', {
+            'fields': ('title', 'description', 'property_type', 'status')
+        }),
+        ('Цена и размеры', {
+            'fields': ('price', 'area', 'rooms')
+        }),
+        ('Контакты', {
+            'fields': ('owner', 'address', 'phone')
+        }),
+        ('Изображения', {
+            'fields': ('images',)
+        }),
+        ('Системные поля', {
+            'fields': ('created_at', 'updated_at'),
+            'classes': ('collapse',)
+        })
+    )
+
+
+class PropertyImageInline(admin.TabularInline):
+    model = PropertyImage
+    extra = 1
+
+
+admin.site.register(PropertyImage)
