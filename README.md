@@ -85,25 +85,36 @@ Smart-Real-Estate/
 
 ## 🟢 Быстрый старт
 
+
+### Клонирование
 ```bash
-# Клонирование
 git clone https://github.com/lamauspex/Smart-Real-Estate.git
+```
 
-# Переход в директорию
+### Переход в директорию
+```bash
 cd Smart-Real-Estate
+```
 
-# Создание виртуального окружения
+### Создание виртуального окружения
+```bash
 python -m venv venv
 source venv/bin/activate  # Linux/Mac
 venv\Scripts\activate     # Windows
+```
 
-# Установка зависимостей
+### Установка зависимостей
+```bash
 pip install -r requirements.txt
+```
 
-# Применение миграций
+### Применение миграций
+```bash
 python manage.py migrate
+```
 
-# Запуск сервера
+### Запуск сервера
+```bash
 python manage.py runserver
 ```
 
